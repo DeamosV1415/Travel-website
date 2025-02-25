@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel & Tourism Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+      // ✅ Import Firebase Modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+      // ✅ Firebase Config (Same as login page)
+      const firebaseConfig = {
+        apiKey: "AIzaSyAA5SAzBOguCIBwr6U9Lw-SGwH5Z90oe0s",
+        authDomain: "travel-website-login-page.firebaseapp.com",
+        projectId: "travel-website-login-page",
+        storageBucket: "travel-website-login-page.appspot.com",
+        messagingSenderId: "455474636612",
+        appId: "1:455474636612:web:7bddfe06b6e2d859589911",
+        measurementId: "G-YJD8LYMXXL",
+      };
+
+      // ✅ Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // ✅ Check if user is logged in
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, show email
+          document.getElementById(
+            "greeting"
+          ).innerText = `Welcome, ${user.email}`;
+        } else {
+          // No user is signed in, redirect to login page
+          window.location.href = "index.html";
+        }
+      });
+
+      // ✅ Logout function
+      window.logout = async function () {
+        await signOut(auth);
+        window.location.href = "index.html"; // Redirect to login page
+      };
+    </script>
+  </head>
+  <body
+    class="bg-cover bg-center h-screen flex items-center justify-center text-white relative"
+    style="background-image: url('bg\ img.jpg')"
+  >
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- 🔥 Show Logged-in User -->
+    <div id="greeting" class="absolute top-4 left-4 text-lg font-semibold">
+      Checking login...
+    </div>
+
+    <!-- 🔥 Logout Button -->
+    <button
+      onclick="logout()"
+      class="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+    >
+      Logout
+    </button>
+
+    <div class="relative text-center">
+      <h1 class="text-4xl font-bold mb-6">Plan Your Perfect Trip</h1>
+      <div class="flex justify-center w-full px-4">
+        <input
+          type="text"
+          class="w-3/4 sm:w-1/2 p-4 text-black rounded-l-lg focus:outline-none text-lg"
+          placeholder="Enter a city..."
+        />
+        <button
+          class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg rounded-r-lg"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
